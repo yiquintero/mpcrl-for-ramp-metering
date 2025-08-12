@@ -1,4 +1,10 @@
-# Reinforcement Learning with Model Predictive Control for Highway Ramp Metering
+# CODECHECK Repository
+
+This is the CODECHECK repository for the publication: [Reinforcement Learning With Model Predictive Control for Highway Ramp Metering](https://doi.org/10.1109/TITS.2025.3549227). It is forked from author's repository associated with the publication.
+
+The reproduced figures can be found in the codecheck/outputs directory.
+
+## Reinforcement Learning with Model Predictive Control for Highway Ramp Metering
 
 [![Source Code License](https://img.shields.io/badge/license-GPL-blueviolet)](https://github.com/FilippoAiraldi/mpcrl-for-ramp-metering/blob/simulations/LICENSE)
 ![Python 3.11.4](https://img.shields.io/badge/python-3.11.4-green.svg)
@@ -27,7 +33,7 @@ If you find the paper or this repository helpful in your publications, please co
 
 ---
 
-## Installation
+### Installation
 
 The code was created with `Python 3.11.4`. To access it, clone the repository
 
@@ -49,7 +55,7 @@ pip install -r other_agents/requirements-pi-alinea.txt
 ```
 
 
-### Structure
+#### Structure
 
 The repository code is structured in the following way (in alphabetical order)
 
@@ -65,7 +71,7 @@ The repository code is structured in the following way (in alphabetical order)
 
 ---
 
-## Launching Simulations
+### Launching Simulations
 
 Training and evaluation simulations can easily be launched via the command below. The provided arguments are set to reproduce the same main results found in the paper, assuming there are no discrepancies due to OS, CPU, etc.. For help about the implications of each different argument, run
 
@@ -75,7 +81,7 @@ python launch.py --help
 
 In what follows, we provide the commands to reproduce the main results in the paper, for each type of agent. Note that the `runname` variable is used to name the output file, which will be saved under the filename `${runname}.xz`.
 
-### MPC-based RL
+#### MPC-based RL
 
 Train with
 
@@ -83,7 +89,7 @@ Train with
 python launch.py --agent-type=lstdq --gamma=0.98 --update-freq=240 --lr=1.0 --lr-decay=0.925 --max-update=0.3 --replaymem-size=2400 --replaymem-sample=0.5 --replaymem-sample-latest=0.5 --exp-chance=0.5 --exp-strength=0.025 --exp-decay=0.5 --agents=15 --episodes=80 --scenarios=2 --demands-type=random --sym-type=SX --seed=0 --verbose=1 --n-jobs=15 --runname=${runname}
 ```
 
-### Non-learning MPC
+#### Non-learning MPC
 
 Evaluate with
 
@@ -91,7 +97,7 @@ Evaluate with
 python launch.py --agent-type=nonlearning-mpc --gamma=0.98 --agents=15 --episodes=80 --scenarios=2 --demands-type=random --sym-type=SX --seed=0 --verbose=1 --n-jobs=15 --runname=${runname}
 ```
 
-### PI-ALINEA
+#### PI-ALINEA
 
 Evaluate with
 
@@ -105,7 +111,7 @@ The proportional and integral gains in PI-ALINEA can be fine-tuned by running
 python other_agents/pi_alinea.py --tune --n-trials=100 --agent=8
 ```
 
-### DDPG
+#### DDPG
 
 Train with
 
@@ -115,7 +121,7 @@ python launch.py --agent-type=ddpg --lr=1e-3 --gamma=0.98 --tau=1e-2 --batch-siz
 
 ---
 
-## Visualization
+### Visualization
 
 To visualize simulation results, simply run
 
@@ -125,11 +131,11 @@ python visualization.py ${runname1}.xz ... ${runnameN}.xz --all
 
 You can additionally pass `--paper`, which will cause the paper's figures (or their ancestors) to be created as PGFPlots source code. In this case, some of the simulation results' filepaths have been hardcoded for simplicity. Please note that not all the simulations support the `--all` flag, as some of them do not contain all the necessary information to create all the figures (depending on the simulated agent type).
 
-### Reproducing Figures from the Paper
+#### Reproducing Figures from the Paper
 
 Here we explain how to reproduce the figures from the paper, aside from minor graphical and design improvements/adjustments made directly in PGFPlots which are available in the LaTeX source code.
 
-#### Figures 3, 5, 6, 7, 8, 9, 10
+##### Figures 3, 5, 6, 7, 8, 9, 10
 
 Running the following command
 
@@ -139,7 +145,7 @@ python visualization.py sims/lstdq_15_dynamics_a_rho_wo_track_higher_var.xz --al
 
 plots the main results, yielding directly Fig. 3, 5-10. Note that, as aforementioned, to generate Fig. 9 some paths have been hardcoded for the sake of simplicity.
 
-#### Figure 4
+##### Figure 4
 
 To generate this figure, we need to combine multiple simulation results by running
 
@@ -147,7 +153,7 @@ To generate this figure, we need to combine multiple simulation results by runni
 python visualization.py sims\lstdq_15_dynamics_a_rho_wo_track_higher_var.xz sims\ddpg_15.xz sims\nonlearning_mpc_15.xz sims\pi_alinea_15_with_queue_manag.xz --cost
 ```
 
-### Saved Results
+#### Saved Results
 
 Here we clarify the naming convention used for the saved simulation results, that can be found in the **`sims`** folder. Note that in each of the saved files, after decompression, you can find the arguments that were used to launch the simulation, as well as the simulation results themselves (which may differ from agent type to agent type).
 
@@ -156,13 +162,13 @@ Filenames always start with the name of the algorithm used, followed by the numb
 - **MPC-based RL**: for these simulations (a.k.a., `lstdq`), we also report whether and which of the dynamics parameters (among `a`, `rho_crit`, and `v_free`) were allowed to be learnt, and if these were also used as tracking setpoints in the MPC objective (more details in the paper)
 - **PI-ALINEA**: included is also whether the queue management strategy was enabled or not
 
-## License
+### License
 
 The repository is provided under the GNU General Public License. See the [LICENSE](https://github.com/FilippoAiraldi/mpcrl-for-ramp-metering/blob/simulations/LICENSE) file included with this repository.
 
 ---
 
-## Author
+### Author
 
 [Filippo Airaldi](https://www.tudelft.nl/staff/f.airaldi/), PhD Candidate [f.airaldi@tudelft.nl | filippoairaldi@gmail.com]
 
