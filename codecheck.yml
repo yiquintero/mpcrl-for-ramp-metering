@@ -40,4 +40,4 @@ summary: >
 repository: https://github.com/codecheckers/certificate-2025-022
 check_time: "2025-08-04 14:00:00"
 certificate: 2025-022
-report: https://doi.org/
+report: https://doi.org/10.5281/zenodo.16814874
